@@ -1,0 +1,109 @@
+
+<div class="row">
+  <div class="col-sm-12">
+    <table class="table table-bordered">
+      <tr>
+        <th class="text-center" colspan="4">List of User</th>
+      </tr>
+      <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">Name</th>
+        <th class="text-center">User Type</th>
+        <th class="text-center">Join Date</th>
+      </tr>
+      <tr ng-repeat="user in users">
+        <th class="text-center">{{ $index+1 }}</th>
+        <td>{{ user.name | capitalize }}</td>
+        <td class="text-center">{{ user.type | capitalize }}</td>
+        <td class="text-center">{{ user.join_date | date:'d MMM yyyy'}}</td>
+      </tr>
+    </table>
+  </div>
+  <hr>
+
+  <div class="col-sm-12">
+    <table class="table table-bordered">
+      <tr>
+        <th class="text-center" colspan="4">List of Product</th>
+      </tr>
+      <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">Name</th>
+        <th class="text-center">Product Type</th>
+        <th class="text-center">Price</th>
+      </tr>
+      <tr ng-repeat="product in products">
+        <th class="text-center">{{ $index+1 }}</th>
+        <td>{{ product.name | capitalize }}</td>
+        <td class="text-center">{{ product.type | capitalize }}</td>
+        <td class="text-center">{{ product.price | currency:"$":2}}</td>
+      </tr>
+    </table>
+  </div>
+  <hr>
+
+  <div class="col-sm-12">
+    <div class="form-group">
+      <label for="userselected">Select User :</label>
+      <div class="row">
+        <div class="col-sm-6">
+          <select class="form-control" name="userselected" ng-model="userSelected" ng-options="user as user.name | capitalize for user in users track by userSelected.id"></select>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Selected Product :</label>
+      <div class="row">
+        <div class="col-sm-12">
+          <table class="table table-bordered">
+            <tr>
+              <th class="text-center">Product Name</th>
+              <th class="text-center">Price</th>
+              <th class="text-center">Qty</th>
+              <th class="text-center">Sub Total</th>
+              <th class="text-center">#</th>
+            </tr>
+
+            <tr ng-repeat="product in selectedProducts">
+              <td>{{ product.name | capitalize }}</td>
+              <td class="text-right">{{ product.price | currency:"$":2 }}</td>
+              <td class="text-center">{{ product.qty }}</td>
+              <td class="text-right">{{ product.subtotal | currency:"$":2 }}</td>
+              <td class="text-center">
+                <button type="button" class="btn btn-danger" name="button" ng-click="removeProduct(product)">X</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <select class="form-control" name="selected-product" ng-model="selected.product" ng-options="product.name | capitalize for product in products" ng-change="priceSubTotal()"></select>
+              </td>
+              <td class="text-right">{{ selected.price | currency:"$":2 }}</td>
+              <td class="text-center">
+                <input type="text" class="form-control" name="selected-qty" ng-model="selected.qty" size="3" ng-change="priceSubTotal()">
+              </td>
+              <td class="text-right">{{ selected.subtotal | currency:"$":2 }}</td>
+              <td class="text-center">
+                <button type="button" class="btn btn-info" name="button" ng-click="addProduct()">Add</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td colspan="4"><b>Total</b></td>
+              <td class="text-right">{{ additionalInfo.total | currency:"$":2 }}</td>
+            </tr>
+            <tr>
+              <td colspan="4"><b>Discount</b></td>
+              <td class="text-right">{{ additionalInfo.nominalDiscount | currency:"$":2 }}</td>
+            </tr>
+            <tr>
+              <td colspan="4"><b>Total After Discount</b></td>
+              <td class="text-right">{{ additionalInfo.afterDiscount | currency:"$":2 }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
